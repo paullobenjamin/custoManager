@@ -1,0 +1,202 @@
+classDiagram
+    class Documento {
+        - _id: ObjectId
+        - _numero: str
+        - _emissor: str
+        - _emissao: datetime
+        - _validade: datetime
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_numero(): str
+        + set_numero(numero: str)
+        + get_emissor(): str
+        + set_emissor(emissor: str)
+        + get_emissao(): datetime
+        + set_emissao(emissao: datetime)
+        + get_validade(): datetime
+        + set_validade(validade: datetime)
+    }
+
+    class Contato {
+        - _id: ObjectId
+        - _tipo: str
+        - _formato: str
+        - _ddi: str
+        - _ddd: str
+        - _valor: str
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_tipo(): str
+        + set_tipo(tipo: str)
+        + get_formato(): str
+        + set_formato(formato: str)
+        + get_ddi(): str
+        + set_ddi(ddi: str)
+        + get_ddd(): str
+        + set_ddd(ddd: str)
+        + get_valor(): str
+        + set_valor(valor: str)
+    }
+
+    class Endereco {
+        - _id: ObjectId
+        - _tipo: str
+        - _tipoLogradouro: str
+        - _logradouro: str
+        - _numero: str
+        - _complemento: str
+        - _bairro: str
+        - _cidade: str
+        - _uf: str
+        - _pais: str
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_tipo(): str
+        + set_tipo(tipo: str)
+        + get_tipoLogradouro(): str
+        + set_tipoLogradouro(tipoLogradouro: str)
+        + get_logradouro(): str
+        + set_logradouro(logradouro: str)
+        + get_numero(): str
+        + set_numero(numero: str)
+        + get_complemento(): str
+        + set_complemento(complemento: str)
+        + get_bairro(): str
+        + set_bairro(bairro: str)
+        + get_cidade(): str
+        + set_cidade(cidade: str)
+        + get_uf(): str
+        + set_uf(uf: str)
+        + get_pais(): str
+        + set_pais(pais: str)
+    }
+
+    class Pessoa {
+        - _id: ObjectId
+        - _nome: str
+        - _idade: int
+        - _documentos: List[Documento]
+        - _contatos: List[Contato]
+        - _enderecos: List[Endereco]
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_nome(): str
+        + set_nome(nome: str)
+        + get_idade(): int
+        + set_idade(idade: int)
+        + get_documentos(): List[Documento]
+        + adicionar_documento(documento: Documento)
+        + remover_documento(documento: Documento)
+        + get_contatos(): List[Contato]
+        + adicionar_contato(contato: Contato)
+        + remover_contato(contato: Contato)
+        + get_enderecos(): List[Endereco]
+        + adicionar_endereco(endereco: Endereco)
+        + remover_endereco(endereco: Endereco)
+    }
+
+    class Cliente {
+        - _id: ObjectId
+        - _pessoa: Pessoa
+        - _numContrato: str
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_pessoa(): Pessoa
+        + set_pessoa(pessoa: Pessoa)
+        + get_numContrato(): str
+        + set_numContrato(numContrato: str)
+    }
+
+    class Usuario {
+        - _id: ObjectId
+        - _cliente: Cliente
+        - _pessoa: Pessoa
+        - _username: str
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_cliente(): Cliente
+        + set_cliente(cliente: Cliente)
+        + get_pessoa(): Pessoa
+        + set_pessoa(pessoa: Pessoa)
+        + get_username(): str
+        + set_username(username: str)
+    }
+
+    class Vpn {
+        - _id: ObjectId
+        - _cliente: Cliente
+        - _nome: str
+        - _host: str
+        - _ip: str
+        - _vpnUsers: List[Usuario]
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_cliente(): Cliente
+        + set_cliente(cliente: Cliente)
+        + get_nome(): str
+        + set_nome(nome: str)
+        + get_host(): str
+        + set_host(host: str)
+        + get_ip(): str
+        + set_ip(ip: str)
+        + get_vpn_users(): List[Usuario]
+        + set_vpn_users(vpnUsers: List[Usuario])
+    }
+
+    class Equipamento {
+        - _id: ObjectId
+        - _cliente: Cliente
+        - _hostname: str
+        - _porta: int
+        - _ip: str
+        - _vpn: Vpn
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_cliente(): Cliente
+        + set_cliente(cliente: Cliente)
+        + get_hostname(): str
+        + set_hostname(hostname: str)
+        + get_porta(): int
+        + set_porta(porta: int)
+        + get_ip(): str
+        + set_ip(ip: str)
+        + get_vpn(): Vpn
+        + set_vpn(vpn: Vpn)
+    }
+
+    class Ambiente {
+        - _id: ObjectId
+        - _cliente: Cliente
+        - _servers: List[Equipamento]
+        - _tecnologia: Tecnologia
+        - _tipo: TipoAmbiente
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_cliente(): Cliente
+        + set_cliente(cliente: Cliente)
+        + get_servers(): List[Equipamento]
+        + set_servers(servers: List[Equipamento])
+        + get_tecnologia(): Tecnologia
+        + set_tecnologia(tecnologia: Tecnologia)
+        + get_tipo(): TipoAmbiente
+        + set_tipo(tipo: TipoAmbiente)
+    }
+
+    class TipoAmbiente {
+        [
+         PROD
+         DEV
+         HML
+         QA
+         OUTRO
+        ]
+    }
+
+    Documento --|> Pessoa
+    Contato --|> Pessoa
+    Endereco --|> Pessoa
+    Pessoa --|> Cliente
+    Pessoa --|> Usuario
+    Cliente --|> Vpn
+    Cliente --|> Equipamento
+    Cliente --|> Ambiente
