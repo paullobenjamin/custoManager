@@ -1,5 +1,5 @@
 @startuml
-    class Documento {
+class Documento {
         - _id: ObjectId
         - _numero: str
         - _emissor: str
@@ -153,23 +153,35 @@
         + set_vpn_users(vpnUsers: List[Usuario])
     }
 
+    class NetAddress {
+        - _hostname: str
+        - _ip: str
+        - _port: int
+        - _protocol: str
+        + get_hostname(): str
+        + set_hostname(hostname: str)
+        + get_ip(): str
+        + set_ip(ip: str)
+        + get_port(): int
+        + set_port(port: int)
+        + get_protocol(): str
+        + set_protocol(protocol: str)
+    }
+
     class Equipamento {
         - _id: ObjectId
         - _cliente: Cliente
-        - _hostname: str
-        - _porta: int
-        - _ip: str
+        - _pubAddress: NetAddress
+        - _priAddress: NetAddress
         - _vpn: Vpn
         + get_id(): ObjectId
         + set_id(id: ObjectId)
         + get_cliente(): Cliente
         + set_cliente(cliente: Cliente)
-        + get_hostname(): str
-        + set_hostname(hostname: str)
-        + get_porta(): int
-        + set_porta(porta: int)
-        + get_ip(): str
-        + set_ip(ip: str)
+        + get_pubAddress(): NetAddress
+        + set_pubAddress(pubAddress: NetAddress)
+        + get_priAddress(): NetAddress
+        + set_priAddress(priAddress: NetAddress)
         + get_vpn(): Vpn
         + set_vpn(vpn: Vpn)
     }
@@ -186,12 +198,13 @@
         + set_arquitetura(arquitetura: TipoArquitetura)
     }
 
-    class Ambiente {
+class Ambiente {
         - _id: ObjectId
         - _cliente: Cliente
         - _servers: List[Equipamento]
         - _tecnologia: Tecnologia
         - _tipo: TipoAmbiente
+        - _vpn: Vpn
         + get_id(): ObjectId
         + set_id(id: ObjectId)
         + get_cliente(): Cliente
@@ -202,6 +215,8 @@
         + set_tecnologia(tecnologia: Tecnologia)
         + get_tipo(): TipoAmbiente
         + set_tipo(tipo: TipoAmbiente)
+        + get_vpn(): Vpn
+        + set_vpn(vpn: Vpn)
     }
 
     class TipoAmbiente {
@@ -233,6 +248,11 @@
     Cliente --|> Vpn
     Cliente --|> Equipamento
     Cliente --|> Ambiente
+    Equipamento --|> NetAddress
+    Equipamento --|> Tecnologia
+    Ambiente --|> Equipamento
+    Ambiente --|> Vpn
+    Ambiente --|> TipoAmbiente
     Usuario --|> Cliente
-    Ambiente --|> Tecnologia
+    Tecnologia --|> TipoArquitetura
 @enduml
