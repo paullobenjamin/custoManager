@@ -1,4 +1,4 @@
-classDiagram
+@startuml
     class Documento {
         - _id: ObjectId
         - _numero: str
@@ -71,6 +71,15 @@ classDiagram
         + set_pais(pais: str)
     }
 
+    class Login{
+        - _username: str
+        - _password: str
+        + get_username(): str
+        + set_username(id: str)
+        + get_password(): str
+        + set_password(id: str)
+    }
+
     class Pessoa {
         - _id: ObjectId
         - _nome: str
@@ -78,6 +87,7 @@ classDiagram
         - _documentos: List[Documento]
         - _contatos: List[Contato]
         - _enderecos: List[Endereco]
+        - _acesso: Login
         + get_id(): ObjectId
         + set_id(id: ObjectId)
         + get_nome(): str
@@ -164,6 +174,18 @@ classDiagram
         + set_vpn(vpn: Vpn)
     }
 
+    class Tecnologia{
+        - _id: ObjectId
+        - _nome: str
+        - _arquitetura: str
+        + get_id(): ObjectId
+        + set_id(id: ObjectId)
+        + get_nome(): str
+        + set_nome(nome: str)
+        + get_arquitetura(): TipoArquitetura
+        + set_arquitetura(arquitetura: TipoArquitetura)
+    }
+
     class Ambiente {
         - _id: ObjectId
         - _cliente: Cliente
@@ -184,11 +206,21 @@ classDiagram
 
     class TipoAmbiente {
         [
-         PROD
-         DEV
-         HML
-         QA
-         OUTRO
+            PROD
+            DEV
+            HML
+            QA
+            OUTRO
+        ]
+    }
+
+    class TipoArquitetura {
+        [
+            REPLICASET
+            SHARD
+            CLSUTER
+            SENTINEL
+            STANDALONE
         ]
     }
 
@@ -196,7 +228,11 @@ classDiagram
     Contato --|> Pessoa
     Endereco --|> Pessoa
     Pessoa --|> Cliente
+    Pessoa --|> Login
     Pessoa --|> Usuario
     Cliente --|> Vpn
     Cliente --|> Equipamento
     Cliente --|> Ambiente
+    Usuario --|> Cliente
+    Ambiente --|> Tecnologia
+@enduml
