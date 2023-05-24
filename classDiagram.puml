@@ -72,18 +72,18 @@ class Documento {
     }
 
     class Login{
-        - _username: str
-        - _password: str
-        + get_username(): str
-        + set_username(id: str)
-        + get_password(): str
-        + set_password(id: str)
+        - _usuario: str
+        - _senha: str
+        + get_usuario(): str
+        + set_usuario(id: str)
+        + get_senha(): str
+        + set_senha(id: str)
     }
 
     class Pessoa {
         - _id: ObjectId
         - _nome: str
-        - _idade: int
+        - _dataRegistro: datetime
         - _documentos: List[Documento]
         - _contatos: List[Contato]
         - _enderecos: List[Endereco]
@@ -92,8 +92,8 @@ class Documento {
         + set_id(id: ObjectId)
         + get_nome(): str
         + set_nome(nome: str)
-        + get_idade(): int
-        + set_idade(idade: int)
+        + get_dataRegistro(): datetime
+        + set_dataRegistro(dataRegistro: datetime)
         + get_documentos(): List[Documento]
         + adicionar_documento(documento: Documento)
         + remover_documento(documento: Documento)

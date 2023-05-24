@@ -7,26 +7,39 @@ from bson.objectid import ObjectId
 
 # Model
 
+# Classe Login
+class Login:
+    def __init__(self, 
+                 username: str = None, 
+                 password: str = None):
+        self._username = username
+        self._password = password
+
+    def get_usuario(self):
+        return self._usuario
+    
+    def set_usuario(self, usuario):
+        self._usuario = usuario
+        
+    def get_senha(self):
+        return self._senha
+    
+    def set_senha(self, senha):
+        self._senha = senha
+
 # Classe Documento
 class Documento:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 tipo: Optional["str"],
-                 numero: Optional["str"],
-                 emissor: Optional["str"],
-                 emissao: Optional["datetime"],
-                 validade: Optional["datetime"]):
-        self._id = id
+                 tipo: Optional["str"] = None,
+                 numero: Optional["str"] = None,
+                 emissor: Optional["str"] = None,
+                 emissao: Optional["datetime"] = None,
+                 validade: Optional["datetime"] = None):
+        self._tipo = tipo
         self._numero = numero
         self._emissor = emissor
         self._emissao = emissao
         self._emissor = validade
-
-    def get_id(self):
-        return self._id
-
-    def set_id(self, id: ObjectId):
-        self._id = id
 
     def get_tipo(self):
         return self._tipo
@@ -62,24 +75,15 @@ class Documento:
 # Classe Contato
 class Contato:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 tipo: Optional["str"],
-                 formato: Optional["str"],
-                 ddi: Optional["str"],
-                 ddd: Optional["str"],
-                 valor: str):
-        self._id = id
-        self._tipo = tipo
+                 tipo: Optional["str"] = None,
+                 formato: Optional["str"] = None,
+                 valor: str = None,
+                 ddi: Optional["str"] = None,
+                 ddd: Optional["str"] = None):
         self._formato = formato
         self._ddi = ddi
         self._ddd = ddd
         self._valor = valor
-
-    def get_id(self):
-        return self._id
-
-    def set_id(self, id: ObjectId):
-        self._id = id
 
     def get_tipo(self):
         return self._tipo
@@ -116,17 +120,15 @@ class Contato:
 
 class Endereco:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 tipo: Optional["str"],
-                 tipoLogradouro: Optional["str"],
-                 logradouro: Optional["str"],
-                 numero: Optional["str"],
-                 complemento: Optional["str"],
-                 bairro: Optional["str"],
-                 cidade: Optional["str"],
-                 uf: Optional["str"],
-                 pais: Optional["str"]):
-        self._id = id
+                 tipo: Optional["str"] = None,
+                 tipoLogradouro: Optional["str"] = None,
+                 logradouro: Optional["str"] = None,
+                 numero: Optional["str"] = None,
+                 complemento: Optional["str"] = None,
+                 bairro: Optional["str"] = None,
+                 cidade: Optional["str"] = None,
+                 uf: Optional["str"] = None,
+                 pais: Optional["str"] = None):
         self._tipo = tipo
         self._tipoLogradouro = tipoLogradouro
         self._logradouro = logradouro
@@ -136,12 +138,6 @@ class Endereco:
         self._cidade = cidade
         self._uf = uf
         self._pais = pais
-
-    def get_id(self):
-        return self._id
-
-    def set_id(self, id: ObjectId):
-        self._id = id
 
     def get_tipo(self):
         return self._tipo
@@ -201,13 +197,15 @@ class Endereco:
 # Classe Pessoa
 class Pessoa:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 nome: Optional["str"],
-                 razao: Optional["str"],
-                 nomeFantasia: Optional["str"],
-                 documentos: list[Optional["Documento"]],
-                 contatos: list[Optional["Contato"]],
-                 enderecos: list[Optional["Endereco"]]):
+                 id: Optional["ObjectId"] = None,
+                 nome: Optional["str"] = None,
+                 razao: Optional["str"] = None,
+                 nomeFantasia: Optional["str"] = None,
+                 dtRegistro: Optional[datetime] = None,
+                 documentos: list[Optional["Documento"]] = None,
+                 contatos: list[Optional["Contato"]] = None,
+                 enderecos: list[Optional["Endereco"]] = None,
+                 login: Optional[Login] = None):
         self._id = id
         self._nome = nome
         self._razao = razao
@@ -215,6 +213,7 @@ class Pessoa:
         self._documentos = documentos
         self._contatos = contatos
         self._enderecos = enderecos
+        self._login = login
 
     def get_id(self):
         return self._id
@@ -240,6 +239,12 @@ class Pessoa:
     def set_nomeFantasia(self, nomeFantasia: Optional["str"]):
         self._nomeFantasia = nomeFantasia
 
+    def get_dtRegistro(self):
+        return self._dtRegistro
+
+    def set_dtRegistro(self, dtRegistro: Optional["str"]):
+        self._dtRegistro = dtRegistro
+
     def get_documentos(self):
         return self._documentos
 
@@ -256,15 +261,21 @@ class Pessoa:
         return self._enderecos
 
     def set_enderecos(self, enderecos: Optional["Endereco"]):
-        self._enderecos = enderecos
+        self._enderecos = enderecos   
+
+    def get_login(self):
+        return self._login
+    
+    def set_login(self, login: str):
+        self._login = login
 
 
 # Classe Cliente
 class Cliente:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 pessoa: Pessoa,
-                 numContrato: Optional["str"]):
+                 id: Optional["ObjectId"] = None,
+                 pessoa: Optional[Pessoa] = None,
+                 numContrato: Optional["str"] = None):
         self._id = id
         self._pessoa = pessoa
         self._numContrato: numContrato
@@ -291,14 +302,14 @@ class Cliente:
 # Classe usuarios
 class Usuario:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 cliente: Cliente,
-                 pessoa: Pessoa,
-                 username: str):
+                 id: Optional[ObjectId] = None,
+                 cliente: Optional[Cliente] = None,
+                 pessoa: Optional[Pessoa] = None,
+                 login: Optional[Login] = None):
         self._id = id
         self._cliente = cliente
         self._pessoa = pessoa
-        self._username = username
+        self._login = login
 
     def get_id(self):
         return self._id
@@ -318,22 +329,22 @@ class Usuario:
     def set_pessoa(self, pessoa: Pessoa):
         self._pessoa = pessoa
 
-    def get_username(self):
-        return self._username
-
-    def set_username(self, username: str):
-        self._username = username
+    def get_login(self):
+        return self._login
+    
+    def set_login(self, login: str):
+        self._login = login
 
 
 # Classe vpn
 class Vpn:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 cliente: Cliente,
-                 nome: str,
-                 host: Optional["str"],
-                 ip: Optional["str"],
-                 vpnUsers: list[Optional["Usuario"]]):
+                 id: Optional[ObjectId] = None,
+                 cliente: Optional[Cliente] = None,
+                 nome: Optional[str] = None,
+                 host: Optional["str"] = None,
+                 ip: Optional["str"] = None,
+                 vpnUsers: list[Optional["Usuario"]] = None):
         self._id = id
         self._cliente = cliente
         self._nome = nome
@@ -381,12 +392,12 @@ class Vpn:
 # Classe Equipamento
 class Equipamento:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 cliente: Cliente,
-                 hostname: str,
-                 porta: int,
-                 ip: str,
-                 vpn: Optional["Vpn"]):
+                 id: Optional["ObjectId"] = None,
+                 cliente: Optional[Cliente] = None,
+                 hostname: Optional[str] = None,
+                 porta: Optional[int] = None,
+                 ip: Optional[str] = None,
+                 vpn: Optional["Vpn"] = None):
         self._id = id
         self._cliente = cliente
         self._hostname = hostname
@@ -443,9 +454,9 @@ class TipoAmbiente(Enum):
 # Tecnologia
 class Tecnologia:
     def __init__(self,
-                 id: Optional["ObjectId"],
-                 nome: str,
-                 arquitetura):
+                 id: Optional["ObjectId"] = None,
+                 nome: Optional[str] = None,
+                 arquitetura = None):
         self._id = id
         self._nome = nome
         self._arquitetura = arquitetura
@@ -473,9 +484,9 @@ class Tecnologia:
 class Ambiente:
     def __init__(self,
                  id: Optional["ObjectId"],
-                 cliente: Cliente,
-                 servers: list["Equipamento"],
-                 tecnologia: Tecnologia,
+                 cliente: Optional[Cliente] = None,
+                 servers: list["Equipamento"] = None,
+                 tecnologia: Optional[Tecnologia] = None,
                  tipo: TipoAmbiente = TipoAmbiente.OUTRO):
         self._id = id
         self._cliente = cliente
