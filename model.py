@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional
-
+from bson import json_util
 from bson.objectid import ObjectId
 
 
@@ -26,6 +26,15 @@ class Login:
     
     def set_senha(self, senha):
         self._senha = senha
+
+    def to_dict(self):
+        data = {
+            "username": self._username,
+            "password": self._password
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
 # Classe Documento
 class Documento:
@@ -71,6 +80,18 @@ class Documento:
     def set_validade(self, validade: Optional["datetime"]):
         self._validade = validade
 
+    def to_dict(self):
+        data = {
+            "tipo": self._tipo,
+            "numero": self._numero,
+            "emissor": self._emissor,
+            "emissao": self._emissao,
+            "validade": self._validade
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
+
 
 # Classe Contato
 class Contato:
@@ -115,9 +136,19 @@ class Contato:
     def set_valor(self, valor: Optional["datetime"]):
         self._valor = valor
 
-    # Classe Endereco
+    def to_dict(self):
+        data = {
+            "tipo": self._tipo,
+            "formato": self._formato,
+            "ddi": self._ddi,
+            "ddd": self._ddd,
+            "valor": self._valor
+        }
 
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
+# Classe Endereco
 class Endereco:
     def __init__(self,
                  tipo: Optional["str"] = None,
@@ -192,6 +223,22 @@ class Endereco:
 
     def set_pais(self, pais: Optional["str"]):
         self._pais = pais
+
+    def to_dict(self):
+        data = {
+            "tipo": self._tipo,
+            "tipoLogradouro": self._tipoLogradouro,
+            "logradouro": self._logradouro,
+            "numero": self._numero,
+            "complemento": self._complemento,
+            "bairro": self._bairro,
+            "cidade": self._cidade,
+            "uf": self._uf,
+            "pais": self._pais
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
 
 # Classe Pessoa
@@ -269,6 +316,21 @@ class Pessoa:
     def set_login(self, login: str):
         self._login = login
 
+    def to_dict(self):
+        data = {
+            "_id": self._id,
+            "nome": self._nome,
+            "razao": self._razao,
+            "nomeFantasia": self._nomeFantasia,
+            "dtRegistro": self._dtRegistro,
+            "documentos": self._documentos,
+            "contatos": self._contatos,
+            "enderecos": self._enderecos,
+            "login": self._login
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
 # Classe Cliente
 class Cliente:
@@ -278,7 +340,7 @@ class Cliente:
                  numContrato: Optional["str"] = None):
         self._id = id
         self._pessoa = pessoa
-        self._numContrato: numContrato
+        self._numContrato = numContrato
 
     def get_id(self):
         return self._id
@@ -297,6 +359,16 @@ class Cliente:
 
     def set_numContrato(self, numContrato):
         self._numContrato = numContrato
+
+    def to_dict(self):
+        data = {
+            "id": self._id,
+            "pessoa": self._pessoa,
+            "numContrato": self._numContrato
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
 
 # Classe usuarios
@@ -334,6 +406,17 @@ class Usuario:
     
     def set_login(self, login: str):
         self._login = login
+
+    def to_dict(self):
+        data = {
+            "id": self._id,
+            "cliente": self._cliente,
+            "pessoa": self._pessoa,
+            "login": self._login
+        }
+
+        data = {k: v for k, v in data.items() if v is not None}
+        return data
 
 
 # Classe vpn

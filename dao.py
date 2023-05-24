@@ -81,7 +81,7 @@ class Dao:
             except:
                 return "É necessário pelo menos 1 (um) endereco para cadastrar uma pessoa"
             
-        if pessoa.get_login is not None:
+        if pessoa.get_login() is not None:
             senha = pessoa.get_login().get_senha()
             hashed_senha = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
             json["login"] = {
