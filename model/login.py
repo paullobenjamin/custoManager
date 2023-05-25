@@ -48,7 +48,7 @@ class Documento:
         self._numero = numero
         self._emissor = emissor
         self._emissao = emissao
-        self._validade = validade
+        self._emissor = validade
 
     def get_tipo(self):
         return self._tipo
@@ -91,6 +91,7 @@ class Documento:
 
         data = {k: v for k, v in data.items() if v is not None}
         return data
+
 
 # Classe Contato
 class Contato:
@@ -315,7 +316,7 @@ class Pessoa:
     
     def set_login(self, login: str):
         self._login = login
-    
+
     def to_dict(self):
         data = {
             "_id": self._id,

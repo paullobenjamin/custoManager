@@ -36,11 +36,11 @@ class Dao:
     def __init__(self) -> None:
         pass
 
-    def criptografar_senha(selg, pessoa: Pessoa):
+    def criptografar_senha(self, pessoa: Pessoa):
         login = pessoa
         salt = bcrypt.gensalt()
 
-    def inserirPessoa(pessoa: Pessoa):
+    def inserirPessoa(self, pessoa: Pessoa):
         json = {}
         
         for doc in pessoa.get_documentos():
@@ -69,7 +69,8 @@ class Dao:
                 if documento is not None:
                     if "documentos" not in json:
                         json["documentos"] = []
-                    json["documentos"].append(documento)
+                    d = documento.to_dict()
+                    json["documentos"].append(d)
             except:
                 return "É necessário pelo menos 1 (um) documento para cadastrar uma pessoa"
 
@@ -78,7 +79,8 @@ class Dao:
                 if endereco is not None:
                     if "enderecos" not in json:
                         json["enderecos"] = []
-                    json["enderecos"].append(endereco)
+                    e = endereco.to_dict()
+                    json["enderecos"].append(e)
             except:
                 return "É necessário pelo menos 1 (um) endereco para cadastrar uma pessoa"
             
@@ -97,8 +99,9 @@ class Dao:
         """
         
         uri = "mongodb://localhost:27017"
-        custoManager = DatabaseConnection(uri, maxPoolSize=10)
-        db = custoManager["custoManager"]
+        connection = DatabaseConnection()
+        connection.connect(uri, maxPoolSize=10)
+        db = connection["custoManager"]
         pessoas = db["pessoas"]
 
         result = pessoas.insert_one(json)
