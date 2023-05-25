@@ -101,6 +101,7 @@ class Contato:
                  valor: str = None,
                  ddi: Optional["str"] = None,
                  ddd: Optional["str"] = None):
+        self._tipo = tipo
         self._formato = formato
         self._ddi = ddi
         self._ddd = ddd

@@ -59,7 +59,8 @@ class Dao:
                 if contato is not None:
                     if "contatos" not in json:
                         json["contatos"] = []
-                    json["contatos"].append(contato)
+                    c = contato.to_dict()
+                    json["contatos"].append(c)
             except:
                 return "É necessário pelo menos 1 (um) contato para cadastrar uma pessoa"
 

@@ -31,8 +31,7 @@ c1 = Contato(
     tipo="Residencial",
     formato="e-mail",
     valor="paullo.benjamin@gmail.com")
-p1 = Pessoa()
-p1.set_nome(nome="Paulo Junior")
+p1 = Pessoa(nome="Paulo Junior")
 p1.set_dtRegistro(dtRegistro=datetime(1980,1,21))
 p1.set_enderecos(enderecos)
 p1.set_documentos(documentos=[d1])
@@ -41,8 +40,8 @@ p1.set_contatos(contatos=[c1])
 try:
     p1_bson = p1.to_dict()
     print(p1_bson)
-    inserirPessoa = Dao()
-    result = Dao.inserirPessoa(pessoa=p1)
+    dao = Dao()
+    result = dao.inserirPessoa(p1)
     print("O _id:ObjectId('{}') foi inserido com sucesso".format(result))
 except Exception as e:
     print("Ocorreu o seguinte erro: ", e)
